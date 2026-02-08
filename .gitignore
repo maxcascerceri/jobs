@@ -1,0 +1,3 @@
+# SQLite WAL files (we commit jobs.db so the workflow can update it)
+jobs.db-shm
+jobs.db-wal

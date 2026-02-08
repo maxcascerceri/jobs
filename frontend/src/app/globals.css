@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-fg);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-fg);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-fg);
+  --color-badge-bg: var(--badge-bg);
+  --color-badge-fg: var(--badge-fg);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #fafafa;
+  --foreground: #0a0a0a;
+  --muted: #f4f4f5;
+  --muted-fg: #71717a;
+  --border: #e4e4e7;
+  --accent: #2563eb;
+  --accent-fg: #ffffff;
+  --card: #ffffff;
+  --card-fg: #0a0a0a;
+  --badge-bg: #f0f0f5;
+  --badge-fg: #3f3f46;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth page transitions */
+main {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
+
+/* Job description styles */
+.job-description h1,
+.job-description h2,
+.job-description h3,
+.job-description h4 {
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+.job-description h1 { font-size: 1.5rem; }
+.job-description h2 { font-size: 1.25rem; }
+.job-description h3 { font-size: 1.125rem; }
+.job-description h4 { font-size: 1rem; }
+
+.job-description p {
+  margin-bottom: 1em;
+  line-height: 1.7;
+}
+.job-description ul,
+.job-description ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+.job-description li {
+  margin-bottom: 0.35em;
+  line-height: 1.6;
+}
+.job-description ul li {
+  list-style-type: disc;
+}
+.job-description ol li {
+  list-style-type: decimal;
+}
+.job-description a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.job-description strong, .job-description b {
+  font-weight: 600;
+}
+.job-description em, .job-description i {
+  font-style: italic;
+}
+.job-description blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 1em;
+  margin: 1em 0;
+  color: var(--muted-fg);
+}
+.job-description pre,
+.job-description code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.9em;
+  background: var(--muted);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+}
+.job-description pre {
+  padding: 1em;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+.job-description pre code {
+  background: none;
+  padding: 0;
+}
+.job-description hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5em 0;
+}
+.job-description table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+.job-description th,
+.job-description td {
+  border: 1px solid var(--border);
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+.job-description th {
+  background: var(--muted);
+  font-weight: 600;
+}

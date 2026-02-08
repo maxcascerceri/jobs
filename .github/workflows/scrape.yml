@@ -1,0 +1,52 @@
+# Run the job scraper on a schedule (no need to run it on your own machine).
+# Requires: GitHub repo secrets REMOTESOURCE_EMAIL and REMOTESOURCE_PASSWORD.
+name: Scrape jobs
+
+on:
+  schedule:
+    # Run daily at 12:00 UTC (e.g. 7:00 AM Eastern)
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+    # Allow manual run from GitHub Actions tab
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # so we can push updated jobs.db
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install -r scraper/requirements.txt
+
+      - name: Install Playwright and Chromium
+        run: |
+          pip install playwright
+          playwright install chromium
+          playwright install-deps
+
+      - name: Run scraper (Remote Source)
+        env:
+          REMOTESOURCE_EMAIL: ${{ secrets.REMOTESOURCE_EMAIL }}
+          REMOTESOURCE_PASSWORD: ${{ secrets.REMOTESOURCE_PASSWORD }}
+        run: cd scraper && python main.py --source remotesource --max-details 500
+
+      - name: Commit and push jobs.db
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add jobs.db
+          if git diff --staged --quiet; then
+            echo "No changes to jobs.db"
+          else
+            git commit -m "chore: update jobs.db from scheduled scrape"
+            git push
+          fi
