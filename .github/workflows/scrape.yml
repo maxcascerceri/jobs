@@ -1,5 +1,7 @@
 # Run the job scraper on a schedule (no need to run it on your own machine).
-# Requires: GitHub repo secrets REMOTESOURCE_EMAIL and REMOTESOURCE_PASSWORD.
+# Scrapes all sources: WeWorkRemotely, Dynamite Jobs, Jobicy, Working Nomads,
+# Jobspresso, Himalayas, Remote Source.
+# Requires: GitHub repo secrets REMOTESOURCE_EMAIL and REMOTESOURCE_PASSWORD (for Remote Source).
 name: Scrape jobs
 
 on:
@@ -33,11 +35,11 @@ jobs:
           playwright install chromium
           playwright install-deps
 
-      - name: Run scraper (Remote Source)
+      - name: Run scraper (all sources)
         env:
           REMOTESOURCE_EMAIL: ${{ secrets.REMOTESOURCE_EMAIL }}
           REMOTESOURCE_PASSWORD: ${{ secrets.REMOTESOURCE_PASSWORD }}
-        run: cd scraper && python main.py --source remotesource --max-details 500
+        run: cd scraper && python main.py --max-details 10000
 
       - name: Commit and push jobs.db
         run: |
